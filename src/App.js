@@ -1,8 +1,10 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import { HelmetProvider } from 'react-helmet-async';
 import Navigation from './components/Navigation';
 import Privacy from './components/Privacy';
+import SEO from './components/SEO';
 import './styles/App.css';
 import './styles/theme.css';
 import './styles/animations.css';
@@ -56,69 +58,72 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider>
-      <Router>
-        <ErrorBoundary>
-          <div className="app">
-            <Navigation />
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/" element={
-                  <main className="container">
+    <HelmetProvider>
+      <ThemeProvider>
+        <Router>
+          <ErrorBoundary>
+            <div className="app">
+              <SEO />
+              <Navigation />
+              <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                  <Route path="/" element={
+                    <main className="container">
+                      <ErrorBoundary>
+                        <Suspense fallback={<LoadingFallback />}>
+                          <Header />
+                        </Suspense>
+                      </ErrorBoundary>
+                      
+                      <ErrorBoundary>
+                        <Suspense fallback={<LoadingFallback />}>
+                          <About />
+                        </Suspense>
+                      </ErrorBoundary>
+                      
+                      <ErrorBoundary>
+                        <Suspense fallback={<LoadingFallback />}>
+                          <Projects />
+                        </Suspense>
+                      </ErrorBoundary>
+                      
+                      <ErrorBoundary>
+                        <Suspense fallback={<LoadingFallback />}>
+                          <Contact />
+                        </Suspense>
+                      </ErrorBoundary>
+                    </main>
+                  } />
+                  <Route path="/privacy" element={
                     <ErrorBoundary>
-                      <Suspense fallback={<LoadingFallback />}>
-                        <Header />
-                      </Suspense>
+                      <Privacy />
                     </ErrorBoundary>
-                    
-                    <ErrorBoundary>
-                      <Suspense fallback={<LoadingFallback />}>
-                        <About />
-                      </Suspense>
-                    </ErrorBoundary>
-                    
-                    <ErrorBoundary>
-                      <Suspense fallback={<LoadingFallback />}>
-                        <Projects />
-                      </Suspense>
-                    </ErrorBoundary>
-                    
-                    <ErrorBoundary>
-                      <Suspense fallback={<LoadingFallback />}>
-                        <Contact />
-                      </Suspense>
-                    </ErrorBoundary>
-                  </main>
-                } />
-                <Route path="/privacy" element={
-                  <ErrorBoundary>
-                    <Privacy />
-                  </ErrorBoundary>
-                } />
-              </Routes>
-              
-              <ErrorBoundary>
+                  } />
+                </Routes>
+                
+                <ErrorBoundary>
+                  <Suspense fallback={<div></div>}>
+                    <Footer />
+                  </Suspense>
+                </ErrorBoundary>
+                
                 <Suspense fallback={<div></div>}>
-                  <Footer />
+                  <ThemeToggle />
                 </Suspense>
-              </ErrorBoundary>
-              
-              <Suspense fallback={<div></div>}>
-                <ThemeToggle />
+                
+                <Suspense fallback={<div></div>}>
+                  <BackToTop />
+                </Suspense>
+                
+                <Suspense fallback={<div></div>}>
+                  <CookieConsent />
+                </Suspense>
               </Suspense>
-              
-              <Suspense fallback={<div></div>}>
-                <BackToTop />
-              </Suspense>
-              
-              <Suspense fallback={<div></div>}>
-                <CookieConsent />
-              </Suspense>
-            </Suspense>
-          </div>
-        </ErrorBoundary>
-      </Router>
-    </ThemeProvider>
+            </div>
+          </ErrorBoundary>
+        </Router>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
