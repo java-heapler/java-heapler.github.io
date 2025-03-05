@@ -56,6 +56,9 @@ const OptimizedImage = ({
   // Setup intersection observer for lazy loading
   useEffect(() => {
     if (!priority && imageRef.current) {
+      // Store a reference to the current element to use in the cleanup function
+      const currentRef = imageRef.current;
+      
       const observer = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
@@ -69,12 +72,11 @@ const OptimizedImage = ({
         }
       );
       
-      observer.observe(imageRef.current);
+      observer.observe(currentRef);
       
       return () => {
-        if (imageRef.current) {
-          observer.disconnect();
-        }
+        // Use the stored reference instead of imageRef.current
+        observer.disconnect();
       };
     }
   }, [priority]);

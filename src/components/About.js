@@ -7,7 +7,6 @@ import { ReadingProgress, ScrollToTop, InteractiveBackground, LoadingAnimation, 
 const SkillIcon = lazy(() => import('./SkillIcon'));
 
 const About = () => {
-  const [loading, setLoading] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -101,7 +100,7 @@ const About = () => {
   return (
     <section id="about" className="about-section" ref={sectionRef} aria-label="About Me Section">
       <div className="about-content">
-        <LoadingAnimation isLoading={loading} />
+        <LoadingAnimation />
         <ReadingProgress />
         <ScrollToTop />
         <InteractiveBackground />

@@ -47,11 +47,11 @@ const LoadingSkeleton = () => (
 
 const CodeSplittingDemo = () => {
   const [loadedComponents, setLoadedComponents] = useState([]);
-  const [bundleData, setBundleData] = useState({
+  const bundleData = {
     original: '524KB',
     split: '142KB',
     savings: '73%'
-  });
+  };
 
   const toggleComponent = (id) => {
     if (loadedComponents.includes(id)) {

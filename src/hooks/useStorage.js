@@ -225,7 +225,7 @@ export default function useStorage(key, initialValue, options = {}) {
           }));
         });
     }
-  }, [key, strategy]);
+  }, [key, strategy, getFromIndexedDB]);
 
   // Define a function to update the stored value
   const setValue = useCallback((value) => {
@@ -278,7 +278,7 @@ export default function useStorage(key, initialValue, options = {}) {
       console.error(`Error setting stored value for key "${key}":`, error);
       setStorageStatus(prev => ({ ...prev, error: error.message }));
     }
-  }, [key, storedValue, strategy, expiry]);
+  }, [key, storedValue, strategy, expiry, determineStorageStrategy, isLocalStorageSupported, isSessionStorageSupported, isIndexedDBSupported]);
 
   // Define a function to remove the stored value
   const removeValue = useCallback(() => {
@@ -304,6 +304,7 @@ export default function useStorage(key, initialValue, options = {}) {
               const db = event.target.result;
               const transaction = db.transaction(['key-value-store'], 'readwrite');
               const store = transaction.objectStore('key-value-store');
+              
               store.delete(key);
             };
           }
@@ -317,7 +318,7 @@ export default function useStorage(key, initialValue, options = {}) {
       console.error(`Error removing stored value for key "${key}":`, error);
       setStorageStatus(prev => ({ ...prev, error: error.message }));
     }
-  }, [key, strategy, initialValue]);
+  }, [key, strategy, initialValue, determineStorageStrategy, isLocalStorageSupported, isSessionStorageSupported, isIndexedDBSupported]);
 
   return [storedValue, setValue, removeValue, storageStatus];
 } 

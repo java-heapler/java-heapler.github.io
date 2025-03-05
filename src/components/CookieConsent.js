@@ -18,9 +18,6 @@ const CookieConsent = () => {
     }
   );
 
-  // Derive analytics state from the stored consent
-  const analyticsEnabled = cookieConsent?.analytics || false;
-
   useEffect(() => {
     // Show consent dialog if no consent is stored
     if (!cookieConsent) {
