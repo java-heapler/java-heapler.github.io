@@ -1,0 +1,264 @@
+.code-splitting-demo {
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--bg-light, #0f2744);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.demo-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.demo-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.bundle-info {
+  display: flex;
+  align-items: center;
+}
+
+.bundle-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.bundle-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.stat-value.highlight {
+  color: #4caf50;
+}
+
+.stat-value.reduction {
+  color: #ff9800;
+}
+
+.components-container {
+  padding: 1.5rem;
+}
+
+.demo-instruction {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.component-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.component-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-primary, #e2e8f0);
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 140px;
+}
+
+.component-button:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.component-button.active {
+  border-color: var(--primary-color, #0070f3);
+  background-color: rgba(0, 112, 243, 0.1);
+  box-shadow: 0 0 0 1px var(--primary-color, #0070f3);
+}
+
+.component-size {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 0.25rem;
+  font-family: monospace;
+}
+
+.loaded-components {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  min-height: 200px;
+}
+
+.component-wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.component-wrapper h4 {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  text-align: center;
+  padding: 1rem;
+}
+
+.empty-state p {
+  opacity: 0.7;
+  max-width: 400px;
+}
+
+.network-info {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.network-panel {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 6px;
+}
+
+.network-panel h4 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.network-panel p {
+  margin: 0.75rem 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.network-panel ul {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.network-panel li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Loading Skeleton */
+.loading-skeleton {
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.skeleton-header {
+  height: 20px;
+  width: 60%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  animation: pulse 1.5s infinite;
+}
+
+.skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-line {
+  height: 15px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  animation: pulse 1.5s infinite;
+}
+
+.skeleton-line:nth-child(2) {
+  width: 85%;
+  animation-delay: 0.2s;
+}
+
+.skeleton-line:nth-child(3) {
+  width: 70%;
+  animation-delay: 0.4s;
+}
+
+.skeleton-footer {
+  height: 30px;
+  width: 40%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  animation: pulse 1.5s infinite;
+  animation-delay: 0.6s;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .demo-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .bundle-stats {
+    margin-top: 1rem;
+  }
+  
+  .loaded-components {
+    grid-template-columns: 1fr;
+  }
+} 

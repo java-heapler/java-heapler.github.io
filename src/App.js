@@ -22,6 +22,7 @@ const Footer = lazy(() => import('./components/Footer'));
 const ThemeToggle = lazy(() => import('./components/ThemeToggle'));
 const BackToTop = lazy(() => import('./components/BackToTop'));
 const CookieConsent = lazy(() => import('./components/CookieConsent'));
+const PerformanceOptimizations = lazy(() => import('./components/PerformanceOptimizations'));
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -84,6 +85,12 @@ function App() {
                       <ErrorBoundary>
                         <Suspense fallback={<LoadingFallback />}>
                           <Projects />
+                        </Suspense>
+                      </ErrorBoundary>
+                      
+                      <ErrorBoundary>
+                        <Suspense fallback={<LoadingFallback />}>
+                          <PerformanceOptimizations />
                         </Suspense>
                       </ErrorBoundary>
                       

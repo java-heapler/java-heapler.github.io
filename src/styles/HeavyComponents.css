@@ -1,0 +1,255 @@
+/* Common styles for all heavy components */
+.heavy-component {
+  padding: 1rem;
+  height: 100%;
+}
+
+.component-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.component-content h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.component-content p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.component-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+}
+
+.component-footer p {
+  margin: 0.25rem 0;
+}
+
+.code-note {
+  font-style: italic;
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+/* Component 1: Chart styles */
+.mock-visualization {
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.mock-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  height: 150px;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chart-bar {
+  flex: 1;
+  background: linear-gradient(to top, var(--primary-color, #0070f3), #5a9fff);
+  border-radius: 4px 4px 0 0;
+  min-width: 20px;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.legend-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary-color, #0070f3);
+  margin-right: 0.5rem;
+  border-radius: 2px;
+}
+
+/* Component 2: Map styles */
+.mock-map {
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.map-container {
+  position: relative;
+  height: 180px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.map-pin {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary-color, #0070f3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.map-pin::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--primary-color, #0070f3);
+}
+
+.map-region {
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  width: 30%;
+  height: 25%;
+  background-color: rgba(0, 112, 243, 0.2);
+  border: 1px solid var(--primary-color, #0070f3);
+  border-radius: 8px;
+}
+
+.map-control-panel {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.map-button {
+  background-color: white;
+  color: #333;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+/* Component 3: Editor styles */
+.mock-editor {
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.editor-toolbar {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.editor-tool {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.toolbar-divider {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0 0.25rem;
+}
+
+.editor-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.editor-tab {
+  background: none;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  opacity: 0.7;
+  position: relative;
+}
+
+.editor-tab.active {
+  opacity: 1;
+}
+
+.editor-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary-color, #0070f3);
+}
+
+.editor-content {
+  min-height: 120px;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+}
+
+.content-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.text-line {
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.image-placeholder {
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.preview-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 100px;
+}
+
+.preview-text {
+  opacity: 0.7;
+  font-style: italic;
+} 
