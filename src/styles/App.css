@@ -268,3 +268,52 @@ section.section {
     padding: 0.4rem;
   }
 }
+
+/* Add skeleton loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.loading-skeleton {
+  width: 100%;
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.skeleton-header {
+  height: 50px;
+  width: 60%;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, var(--bg-light) 25%, var(--bg-lighter) 50%, var(--bg-light) 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+.skeleton-content {
+  width: 100%;
+}
+
+.skeleton-text {
+  height: 20px;
+  margin-bottom: 1rem;
+  width: 100%;
+  background: linear-gradient(90deg, var(--bg-light) 25%, var(--bg-lighter) 50%, var(--bg-light) 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+.skeleton-text:nth-child(2) {
+  width: 80%;
+}
+
+.skeleton-text:nth-child(3) {
+  width: 60%;
+}
