@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 1100;
 }
 
 .privacy-policy-content {
@@ -17,9 +17,10 @@
   border-radius: 8px;
   max-width: 800px;
   width: 90%;
-  max-height: 90vh;
+  max-height: 80vh;
   overflow-y: auto;
   position: relative;
+  margin-bottom: 80px;
 }
 
 .privacy-policy-content h2 {

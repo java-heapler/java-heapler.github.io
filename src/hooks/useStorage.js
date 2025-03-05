@@ -110,19 +110,21 @@ export default function useStorage(key, initialValue, options = {}) {
     if (!isLocalStorageSupported()) return defaultValue;
     
     const item = localStorage.getItem(key);
-    if (!item) return defaultValue;
+    if (item === null) return defaultValue; // Explicitly check for null
     
     try {
       const parsed = JSON.parse(item);
       
-      // Check if item has expired
-      if (parsed.expiry && parsed.expiry < Date.now()) {
+      // Check if item has expired or if value is missing
+      if (!parsed || (parsed.expiry && parsed.expiry < Date.now())) {
         localStorage.removeItem(key);
         return defaultValue;
       }
       
-      return parsed.value;
-    } catch {
+      // Make sure value property exists
+      return parsed.value !== undefined ? parsed.value : defaultValue;
+    } catch (error) {
+      console.error('Error parsing localStorage value:', error);
       return defaultValue;
     }
   }
@@ -132,19 +134,21 @@ export default function useStorage(key, initialValue, options = {}) {
     if (!isSessionStorageSupported()) return defaultValue;
     
     const item = sessionStorage.getItem(key);
-    if (!item) return defaultValue;
+    if (item === null) return defaultValue; // Explicitly check for null
     
     try {
       const parsed = JSON.parse(item);
       
-      // Check if item has expired
-      if (parsed.expiry && parsed.expiry < Date.now()) {
+      // Check if item has expired or if value is missing
+      if (!parsed || (parsed.expiry && parsed.expiry < Date.now())) {
         sessionStorage.removeItem(key);
         return defaultValue;
       }
       
-      return parsed.value;
-    } catch {
+      // Make sure value property exists
+      return parsed.value !== undefined ? parsed.value : defaultValue;
+    } catch (error) {
+      console.error('Error parsing sessionStorage value:', error);
       return defaultValue;
     }
   }

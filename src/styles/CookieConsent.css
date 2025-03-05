@@ -10,6 +10,12 @@
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* When privacy policy is open, modify cookie consent behavior */
+body.privacy-open .cookie-consent {
+  opacity: 0.5; /* Dim the cookie consent when privacy policy is open */
+  pointer-events: none; /* Prevent interaction with cookie consent when privacy policy is open */
+}
+
 .cookie-content {
   max-width: 1200px;
   margin: 0 auto;

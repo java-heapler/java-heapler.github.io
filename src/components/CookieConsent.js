@@ -13,24 +13,34 @@ const CookieConsent = () => {
     'cookieConsent', 
     null, 
     { 
-      strategy: 'auto', 
+      strategy: 'local', // Force local storage for better browser support
       expiry: 365 * 24 * 60 * 60 * 1000 // 1 year in milliseconds
     }
   );
 
+  // Debug logging in development mode
   useEffect(() => {
-    // Show consent dialog if no consent is stored
-    if (!cookieConsent) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Cookie consent value:', cookieConsent);
+      console.log('Storage status:', storageStatus);
+    }
+  }, [cookieConsent, storageStatus]);
+
+  useEffect(() => {
+    // Only show consent dialog if explicitly no consent is stored AND we're not loading
+    if (!cookieConsent && !storageStatus.loading) {
       setShowConsent(true);
-    } else if (cookieConsent.analytics) {
+    } else if (cookieConsent && cookieConsent.analytics) {
       enableAnalytics();
     }
-  }, [cookieConsent]);
+  }, [cookieConsent, storageStatus.loading]);
 
   // Log storage errors in development 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production' && storageStatus.error) {
+    if (storageStatus.error) {
       console.error('Storage error:', storageStatus.error);
+      // Fallback: If storage fails, use in-memory state at least for the current session
+      setShowConsent(false);
     }
   }, [storageStatus.error]);
 
@@ -51,21 +61,31 @@ const CookieConsent = () => {
   };
 
   const handleAcceptAll = () => {
-    setCookieConsent({ 
+    const consentData = { 
       essential: true, 
       analytics: true,
       timestamp: new Date().toISOString()
-    });
+    };
+    
+    // Set consent in storage
+    setCookieConsent(consentData);
+    
+    // Even if storage might fail, update UI immediately
     enableAnalytics();
     setShowConsent(false);
   };
 
   const handleAcceptEssential = () => {
-    setCookieConsent({ 
+    const consentData = { 
       essential: true, 
       analytics: false,
       timestamp: new Date().toISOString()
-    });
+    };
+    
+    // Set consent in storage
+    setCookieConsent(consentData);
+    
+    // Even if storage might fail, update UI immediately
     disableAnalytics();
     setShowConsent(false);
   };
@@ -86,6 +106,7 @@ const CookieConsent = () => {
     }
   };
 
+  // Don't render anything if both consent and privacy policy are not showing
   if (!showConsent && !showPrivacyPolicy) return null;
 
   return (

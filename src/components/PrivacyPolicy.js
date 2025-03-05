@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/PrivacyPolicy.css';
 
 const PrivacyPolicy = ({ onClose }) => {
+  // Add/remove privacy-open class to body when component mounts/unmounts
+  useEffect(() => {
+    // Add class when component mounts
+    document.body.classList.add('privacy-open');
+    
+    // Remove class when component unmounts
+    return () => {
+      document.body.classList.remove('privacy-open');
+    };
+  }, []);
+
   return (
     <div className="privacy-policy-modal">
       <div className="privacy-policy-content">
