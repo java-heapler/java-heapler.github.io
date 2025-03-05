@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
-import ReactGA from 'react-ga4';
+import { logEvent, logPageView } from '../utils/analytics';
 import '../styles/About.css';
 import { ReadingProgress, ScrollToTop, InteractiveBackground, LoadingAnimation, SkillProgressBar } from './Features';
-
-// Initialize GA4 (add this outside the component)
-ReactGA.initialize('YOUR-MEASUREMENT-ID'); // Replace with your GA4 measurement ID
 
 // Lazy load the skill icons
 const SkillIcon = lazy(() => import('./SkillIcon'));
@@ -15,7 +12,7 @@ const About = () => {
 
   useEffect(() => {
     // Track page view when component mounts
-    ReactGA.send({ hitType: "pageview", page: "/about" });
+    logPageView("/about");
 
     const observerOptions = {
       threshold: 0.1,
@@ -87,19 +84,11 @@ const About = () => {
 
   // Analytics event tracking functions
   const trackResumeDownload = () => {
-    ReactGA.event({
-      category: 'User',
-      action: 'Downloaded Resume',
-      label: 'Resume Download'
-    });
+    logEvent('User', 'Downloaded Resume', 'Resume Download');
   };
 
   const trackSkillClick = (skillName) => {
-    ReactGA.event({
-      category: 'Skill Interaction',
-      action: 'Clicked Skill',
-      label: skillName
-    });
+    logEvent('Skill Interaction', 'Clicked Skill', skillName);
   };
 
   const handleKeyPress = (e, callback) => {

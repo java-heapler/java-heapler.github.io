@@ -175,11 +175,10 @@ section.section {
   }
 }
 
-/* Responsive styles */
+/* Improved Mobile Responsiveness */
 @media (max-width: 768px) {
   .section {
-    padding: 60px 0;
-    min-height: auto;
+    padding: 3rem 1.5rem;
   }
   
   .container {
@@ -187,25 +186,113 @@ section.section {
   }
   
   .back-to-top {
-    bottom: 1rem;
     right: 1rem;
+    bottom: 1rem;
     width: 40px;
     height: 40px;
   }
-
-  /* Improve touch targets */
+  
   .nav-links a,
-  .footer-link {
-    padding: 12px;
+  .nav-links button {
+    padding: 0.75rem 1rem;
   }
-
+  
   .navigation {
-    flex-direction: column;
-    align-items: center;
+    padding: 0.75rem 1rem;
   }
-
+  
   .app {
-    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header.header {
+    padding-top: 4rem;
+  }
+  
+  .header-text h1 {
+    font-size: 1.75rem;
+  }
+  
+  .header-text .title {
+    font-size: 1.25rem;
+  }
+  
+  .cta-buttons a {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+  
+  .skip-link:focus {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .contact-section button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+  
+  .project-card {
+    padding: 1rem;
+  }
+  
+  .project-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .project-card p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .back-to-top {
+    width: 44px;
+    height: 44px;
+  }
+  
+  a:active,
+  button:active {
+    opacity: 0.7;
+  }
+  
+  .nav-links a,
+  .nav-links button {
+    padding: 0.8rem 1.2rem;
   }
 }
 
@@ -266,5 +353,92 @@ section.section {
     bottom: 60px;
     right: 10px;
     padding: 0.4rem;
+  }
+}
+
+/* LazyImage Component */
+.lazy-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.lazy-image-container.loading {
+  background-color: var(--color-background-secondary);
+  border-radius: 4px;
+}
+
+.image-placeholder {
+  background: linear-gradient(90deg, 
+    var(--color-background-secondary) 0%, 
+    var(--color-background-tertiary) 50%,
+    var(--color-background-secondary) 100%);
+  background-size: 200% 100%;
+  animation: loading-animation 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes loading-animation {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.lazy-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
+
+.lazy-image.error {
+  opacity: 0.7;
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: var(--color-primary);
+  color: white;
+  z-index: 1000;
+}
+
+/* Focus styles */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus,
+[tabindex]:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  a:focus,
+  button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus,
+  [tabindex]:focus {
+    outline: 2px solid CanvasText;
   }
 }

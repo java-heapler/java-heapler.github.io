@@ -1,12 +1,15 @@
 /* contact.css */
 .contact-section {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
   background: #ffffff;
   text-align: center;
 }
 
 .contact-section h2 {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
   font-size: 2.5rem;
   color: #2d3436;
 }
@@ -17,49 +20,130 @@ form {
 }
 
 .form-group {
-  margin-bottom: 2rem;
-  text-align: left;
+  margin-bottom: 1.5rem;
 }
 
-label {
+.form-group label {
   display: block;
   margin-bottom: 0.5rem;
+  font-weight: 500;
   color: #2d3436;
   font-size: 1.1rem;
 }
 
-input,
-textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  font-size: 1rem;
+  background-color: var(--color-background-secondary);
+  color: var(--color-text);
+  font-family: inherit;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-textarea {
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.form-group textarea {
   min-height: 150px;
   resize: vertical;
 }
 
-button {
-  background: #003f7f;
+.contact-section button {
+  background-color: var(--color-primary);
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 4px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
 }
 
-button:hover {
-  background: #002f5e;
+.contact-section button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.contact-section button:disabled {
+  background-color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+.contact-section button.submitting {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.contact-section button.submitting::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.success-message {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--color-success-bg);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.success-message p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.send-another-btn {
+  background-color: var(--color-secondary) !important;
+}
+
+.error-message {
+  color: var(--color-error);
+  background-color: var(--color-error-bg);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.direct-contact {
+  margin-top: 2rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.direct-contact a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.direct-contact a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
   .contact-section {
-    padding: 4rem 1.5rem;
+    padding: 3rem 1rem;
   }
   
   .contact-section h2 {
@@ -71,14 +155,9 @@ button:hover {
     padding: 0 1rem;
   }
   
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-
-  input,
-  textarea {
-    font-size: 16px; /* Prevents zoom on mobile */
-    padding: 0.7rem;
+  .form-group input,
+  .form-group textarea {
+    padding: 0.6rem;
   }
 
   button {
@@ -136,4 +215,28 @@ button:hover {
 [data-theme='dark'] button:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Add these styles for form validation */
+
+.form-group.has-error input,
+.form-group.has-error textarea {
+  border-color: var(--color-error, #e74c3c);
+}
+
+.field-error {
+  color: var(--color-error, #e74c3c);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+/* Add CSS variables for colors if they don't exist in theme.css */
+:root {
+  --color-error: #e74c3c;
+  --color-error-bg: rgba(231, 76, 60, 0.1);
+  --color-success-bg: rgba(46, 204, 113, 0.1);
+  --color-disabled: #95a5a6;
+  --color-primary-dark: #0056b3;
+  --color-secondary: #6c757d;
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
 import '../styles/Navigation.css';
-import ReactGA from 'react-ga4';
+import { logEvent } from '../utils/analytics';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -82,11 +82,7 @@ const Navigation = () => {
   };
 
   const trackResumeClick = () => {
-    ReactGA.event({
-      category: 'Navigation',
-      action: 'Clicked Resume',
-      label: 'Header Resume Button'
-    });
+    logEvent('Navigation', 'Clicked Resume', 'Header Resume Button');
   };
 
   return (
@@ -118,13 +114,16 @@ const Navigation = () => {
           onKeyPress={(e) => handleKeyPress(e, toggleMenu)}
           aria-expanded={isOpen}
           aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-controls="main-menu"
         >
-          <span className="menu-icon"></span>
+          <span className="menu-icon" aria-hidden="true"></span>
         </button>
 
         <div 
           className={`nav-links ${isOpen ? 'active' : ''}`} 
-          role="menubar"
+          id="main-menu"
+          role="menu"
+          aria-hidden={!isOpen && window.innerWidth <= 768}
           onClick={(e) => {
             // Close menu when clicking outside on mobile
             if (e.target === e.currentTarget) {
@@ -142,7 +141,7 @@ const Navigation = () => {
                 scrollToSection(section);
               }}
               role="menuitem"
-              tabIndex={0}
+              tabIndex={isOpen || window.innerWidth > 768 ? 0 : -1}
               onKeyPress={(e) => handleKeyPress(e, () => scrollToSection(section))}
               aria-label={`Navigate to ${section} section`}
             >
@@ -156,6 +155,7 @@ const Navigation = () => {
             rel="noopener noreferrer"
             onClick={trackResumeClick}
             role="menuitem"
+            tabIndex={isOpen || window.innerWidth > 768 ? 0 : -1}
             aria-label="Open Resume PDF in new tab"
           >
             Resume

@@ -4,6 +4,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { useScreenSize } from '../hooks/useScreenSize';
 import '../styles/Header.css';
 import { gsap } from 'gsap';
+import LazyImage from './LazyImage';
 
 // Lazy load the animated gradient component
 const AnimatedGradient = lazy(() => import('./AnimatedGradient'));
@@ -104,24 +105,15 @@ function Header() {
 
           <div className={`header-image ${!imageLoaded ? 'loading' : ''}`}>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: imageLoaded ? 1 : 0 }} transition={{ duration: 0.5 }}>
-              <picture>
-                <source srcSet={`${process.env.PUBLIC_URL}/profile-optimized.avif`} type="image/avif" />
-                <source srcSet={`${process.env.PUBLIC_URL}/profile-optimized.jpg`} type="image/jpeg" />
-                <img 
-                  ref={imageRef}
-                  src={`${process.env.PUBLIC_URL}/profile-fallback.jpg`} 
-                  alt="Joseph Heupler" 
-                  className="profile-image"
-                  loading="eager"
-                  width="300"
-                  height="300"
-                  onLoad={() => setImageLoaded(true)}
-                  onError={(e) => {
-                    console.error('Image failed to load:', e);
-                    setImageLoaded(true);
-                  }}
-                />
-              </picture>
+              <LazyImage 
+                src={`${process.env.PUBLIC_URL}/profile-optimized.jpg`}
+                fallbackSrc={`${process.env.PUBLIC_URL}/profile-fallback.jpg`}
+                alt="Joseph Heupler" 
+                className="profile-image"
+                width="300"
+                height="300"
+                onLoad={() => setImageLoaded(true)}
+              />
             </motion.div>
           </div>
         </div>
