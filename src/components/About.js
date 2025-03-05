@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
-import { logEvent, logPageView } from '../utils/analytics';
+import { logPageView, logEvent } from '../utils/analytics';
 import '../styles/About.css';
 import { ReadingProgress, ScrollToTop, InteractiveBackground, LoadingAnimation, SkillProgressBar } from './Features';
 

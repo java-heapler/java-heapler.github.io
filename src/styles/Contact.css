@@ -1,15 +1,12 @@
 /* contact.css */
 .contact-section {
-  padding: 4rem 2rem;
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 6rem 2rem;
   background: #ffffff;
   text-align: center;
 }
 
 .contact-section h2 {
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 3rem;
   font-size: 2.5rem;
   color: #2d3436;
 }
@@ -20,130 +17,91 @@ form {
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  position: relative;
 }
 
-.form-group label {
+label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
   color: #2d3436;
   font-size: 1.1rem;
 }
 
-.form-group input,
-.form-group textarea {
+input,
+textarea {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--color-border);
+  padding: 0.8rem;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: var(--color-background-secondary);
-  color: var(--color-text);
-  font-family: inherit;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: #e74c3c;
 }
 
-.form-group textarea {
-  min-height: 150px;
-  resize: vertical;
-}
-
-.contact-section button {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: block;
-  width: 100%;
-  max-width: 200px;
-  margin: 0 auto;
-}
-
-.contact-section button:hover {
-  background-color: var(--color-primary-dark);
-}
-
-.contact-section button:disabled {
-  background-color: var(--color-disabled);
-  cursor: not-allowed;
-}
-
-.contact-section button.submitting {
-  position: relative;
-  padding-left: 2.5rem;
-}
-
-.contact-section button.submitting::before {
-  content: '';
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
 }
 
 .success-message {
-  text-align: center;
-  padding: 2rem;
-  background-color: var(--color-success-bg);
-  border-radius: 8px;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1.5rem;
+  border-radius: 4px;
   margin-bottom: 2rem;
 }
 
 .success-message p {
   margin-bottom: 1.5rem;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
-.send-another-btn {
-  background-color: var(--color-secondary) !important;
-}
-
-.error-message {
-  color: var(--color-error);
-  background-color: var(--color-error-bg);
-  padding: 0.75rem;
+.success-message button {
+  background: #28a745;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
   border-radius: 4px;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
-.direct-contact {
-  margin-top: 2rem;
-  text-align: center;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--color-border);
+.success-message button:hover {
+  background: #218838;
 }
 
-.direct-contact a {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 500;
+textarea {
+  min-height: 150px;
+  resize: vertical;
 }
 
-.direct-contact a:hover {
-  text-decoration: underline;
+button {
+  background: #003f7f;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #002f5e;
 }
 
 @media (max-width: 768px) {
   .contact-section {
-    padding: 3rem 1rem;
+    padding: 4rem 1.5rem;
   }
   
   .contact-section h2 {
@@ -155,9 +113,14 @@ form {
     padding: 0 1rem;
   }
   
-  .form-group input,
-  .form-group textarea {
-    padding: 0.6rem;
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  input,
+  textarea {
+    font-size: 16px; /* Prevents zoom on mobile */
+    padding: 0.7rem;
   }
 
   button {
@@ -217,26 +180,28 @@ form {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Add these styles for form validation */
+/* Add dark mode styles for error and success messages */
 
-.form-group.has-error input,
-.form-group.has-error textarea {
-  border-color: var(--color-error, #e74c3c);
+[data-theme='dark'] .error-message {
+  color: #ff6b6b;
 }
 
-.field-error {
-  color: var(--color-error, #e74c3c);
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-  text-align: left;
+[data-theme='dark'] .success-message {
+  background-color: #2c3e50;
+  color: #2ecc71;
 }
 
-/* Add CSS variables for colors if they don't exist in theme.css */
-:root {
-  --color-error: #e74c3c;
-  --color-error-bg: rgba(231, 76, 60, 0.1);
-  --color-success-bg: rgba(46, 204, 113, 0.1);
-  --color-disabled: #95a5a6;
-  --color-primary-dark: #0056b3;
-  --color-secondary: #6c757d;
+[data-theme='dark'] .success-message button {
+  background: #2ecc71;
+  color: #1a1a1a;
+}
+
+[data-theme='dark'] .success-message button:hover {
+  background: #27ae60;
+}
+
+/* Ensure error styling is consistent with theme */
+[data-theme='dark'] input[aria-invalid="true"],
+[data-theme='dark'] textarea[aria-invalid="true"] {
+  border-color: #ff6b6b;
 }

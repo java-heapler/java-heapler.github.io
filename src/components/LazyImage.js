@@ -1,47 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const LazyImage = ({ src, fallbackSrc, alt, className, width, height, ...rest }) => {
-  const [imageSrc, setImageSrc] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = src;
-    
-    img.onload = () => {
-      setImageSrc(src);
-      setLoading(false);
-    };
-    
-    img.onerror = () => {
-      if (fallbackSrc) {
-        setImageSrc(fallbackSrc);
-      }
-      setError(true);
-      setLoading(false);
-    };
-
-    return () => {
-      img.onload = null;
-      img.onerror = null;
-    };
-  }, [src, fallbackSrc]);
-
+const LazyImage = ({ 
+  src, 
+  alt, 
+  width,
+  height,
+  className = '',
+  priority = false,
+  onLoad = () => {},
+  onError = () => {},
+  ...rest 
+}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  
+  // Generate sources for different formats
+  const basePath = src.replace(/\.(jpg|jpeg|png|gif)$/i, '');
+  const avifSrc = `${basePath}.avif`;
+  const webpSrc = `${basePath}.webp`;
+  
+  const handleLoad = (e) => {
+    setIsLoaded(true);
+    onLoad(e);
+  };
+  
+  const handleError = (e) => {
+    setHasError(true);
+    onError(e);
+  };
+  
   return (
-    <div className={`lazy-image-container ${loading ? 'loading' : ''} ${className || ''}`}>
-      {loading && <div className="image-placeholder" style={{ width, height }} />}
-      {!loading && imageSrc && (
-        <img 
-          src={imageSrc} 
-          alt={alt} 
-          width={width}
-          height={height}
-          className={`lazy-image ${error ? 'error' : ''}`}
-          {...rest}
-        />
-      )}
-    </div>
+    <picture>
+      {!hasError && <source srcSet={avifSrc} type="image/avif" />}
+      {!hasError && <source srcSet={webpSrc} type="image/webp" />}
+      <img 
+        src={src} 
+        alt={alt} 
+        loading={priority ? "eager" : "lazy"}
+        width={width}
+        height={height}
+        className={`${className} ${isLoaded ? 'loaded' : 'loading'}`}
+        onLoad={handleLoad}
+        onError={handleError}
+        {...rest} 
+      />
+    </picture>
   );
 };
 

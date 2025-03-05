@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
-import '../styles/Navigation.css';
 import { logEvent } from '../utils/analytics';
+import '../styles/Navigation.css';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -114,16 +114,13 @@ const Navigation = () => {
           onKeyPress={(e) => handleKeyPress(e, toggleMenu)}
           aria-expanded={isOpen}
           aria-label={isOpen ? "Close menu" : "Open menu"}
-          aria-controls="main-menu"
         >
-          <span className="menu-icon" aria-hidden="true"></span>
+          <span className="menu-icon"></span>
         </button>
 
         <div 
           className={`nav-links ${isOpen ? 'active' : ''}`} 
-          id="main-menu"
-          role="menu"
-          aria-hidden={!isOpen && window.innerWidth <= 768}
+          role="menubar"
           onClick={(e) => {
             // Close menu when clicking outside on mobile
             if (e.target === e.currentTarget) {
@@ -141,7 +138,7 @@ const Navigation = () => {
                 scrollToSection(section);
               }}
               role="menuitem"
-              tabIndex={isOpen || window.innerWidth > 768 ? 0 : -1}
+              tabIndex={0}
               onKeyPress={(e) => handleKeyPress(e, () => scrollToSection(section))}
               aria-label={`Navigate to ${section} section`}
             >
@@ -155,7 +152,6 @@ const Navigation = () => {
             rel="noopener noreferrer"
             onClick={trackResumeClick}
             role="menuitem"
-            tabIndex={isOpen || window.innerWidth > 768 ? 0 : -1}
             aria-label="Open Resume PDF in new tab"
           >
             Resume
