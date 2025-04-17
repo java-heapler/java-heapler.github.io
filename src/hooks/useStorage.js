@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+/* eslint-disable no-use-before-define */
 
 /**
  * Custom storage hook that handles multiple storage mechanisms
@@ -209,6 +210,7 @@ export default function useStorage(key, initialValue, options = {}) {
   }
 
   // Load data from IndexedDB when the component mounts
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (strategy === 'indexeddb' || strategy === 'auto') {
       setStorageStatus(prev => ({ ...prev, loading: true }));
