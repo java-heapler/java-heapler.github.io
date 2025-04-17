@@ -36,7 +36,7 @@ export default function useStorage(key, initialValue, options = {}) {
   });
 
   // Helper to determine which storage mechanism to use
-  function determineStorageStrategy() {
+  const determineStorageStrategy = useCallback(() => {
     if (strategy !== 'auto') return strategy;
     
     // Auto-detect best storage strategy
@@ -45,10 +45,10 @@ export default function useStorage(key, initialValue, options = {}) {
     if (isSessionStorageSupported()) return 'session';
     
     return 'memory'; // Last resort
-  }
+  }, [strategy, isIndexedDBSupported, isLocalStorageSupported, isSessionStorageSupported]);
 
   // Helper to check if a storage strategy is supported
-  function isStorageSupported(storageType) {
+  const isStorageSupported = useCallback((storageType) => {
     switch (storageType) {
       case 'local': return isLocalStorageSupported();
       case 'session': return isSessionStorageSupported();
@@ -56,10 +56,10 @@ export default function useStorage(key, initialValue, options = {}) {
       case 'auto': return isLocalStorageSupported() || isSessionStorageSupported() || isIndexedDBSupported();
       default: return false;
     }
-  }
+  }, [isLocalStorageSupported, isSessionStorageSupported, isIndexedDBSupported]);
 
   // Check support for localStorage
-  function isLocalStorageSupported() {
+  const isLocalStorageSupported = useCallback(() => {
     try {
       const testKey = '__storage_test__';
       localStorage.setItem(testKey, testKey);
@@ -68,10 +68,10 @@ export default function useStorage(key, initialValue, options = {}) {
     } catch (e) {
       return false;
     }
-  }
+  }, []);
 
   // Check support for sessionStorage
-  function isSessionStorageSupported() {
+  const isSessionStorageSupported = useCallback(() => {
     try {
       const testKey = '__storage_test__';
       sessionStorage.setItem(testKey, testKey);
@@ -80,12 +80,12 @@ export default function useStorage(key, initialValue, options = {}) {
     } catch (e) {
       return false;
     }
-  }
+  }, []);
 
   // Check support for IndexedDB
-  function isIndexedDBSupported() {
+  const isIndexedDBSupported = useCallback(() => {
     return typeof window !== 'undefined' && 'indexedDB' in window;
-  }
+  }, []);
 
   // Get value from the appropriate storage
   function getValueFromStorage(key, defaultValue, strategy) {

@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useRef, lazy, Suspense } from 'react';
 import { logPageView, logEvent } from '../utils/analytics';
 import '../styles/About.css';
-import { ReadingProgress, ScrollToTop, InteractiveBackground, LoadingAnimation, SkillProgressBar } from './Features';
+import { ReadingProgress, ScrollToTop, InteractiveBackground, LoadingAnimation } from './Features';
 
 // Lazy load the skill icons
 const SkillIcon = lazy(() => import('./SkillIcon'));

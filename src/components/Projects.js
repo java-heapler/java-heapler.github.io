@@ -114,7 +114,7 @@ function Projects() {
   });
 
   return (
-    <section id="projects" className="section projects" role="region" aria-labelledby="projects-heading">
+    <section id="projects" className="section projects" aria-labelledby="projects-heading">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
