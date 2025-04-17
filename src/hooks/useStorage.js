@@ -155,7 +155,7 @@ export default function useStorage(key, initialValue, options = {}) {
   }
 
   // Get from IndexedDB
-  function getFromIndexedDB(key) {
+  const getFromIndexedDB = useCallback((key) => {
     return new Promise((resolve, reject) => {
       if (!isIndexedDBSupported()) {
         reject(new Error('IndexedDB not supported'));
@@ -207,10 +207,9 @@ export default function useStorage(key, initialValue, options = {}) {
         };
       };
     });
-  }
+  }, []);
 
   // Load data from IndexedDB when the component mounts
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (strategy === 'indexeddb' || strategy === 'auto') {
       setStorageStatus(prev => ({ ...prev, loading: true }));
