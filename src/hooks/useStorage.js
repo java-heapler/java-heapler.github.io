@@ -207,7 +207,7 @@ export default function useStorage(key, initialValue, options = {}) {
         };
       };
     });
-  }, []);
+  }, [isIndexedDBSupported]);
 
   // Load data from IndexedDB when the component mounts
   useEffect(() => {
