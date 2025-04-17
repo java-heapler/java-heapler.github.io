@@ -50,8 +50,8 @@ function Contact() {
   };
 
   return (
-    <section className="contact-section" id="contact">
-      <h2>Contact Me</h2>
+    <section className="contact-section" id="contact" role="region" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact Me</h2>
       {isSubmitted ? (
         <div className="success-message">
           <p>Your message has been sent. Thank you!</p>

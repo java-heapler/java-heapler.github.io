@@ -69,7 +69,7 @@ function App() {
               <Suspense fallback={<LoadingFallback />}>
                 <Routes>
                   <Route path="/" element={
-                    <main className="container">
+                    <main id="mainContent" role="main" className="container">
                       <ErrorBoundary>
                         <Suspense fallback={<LoadingFallback />}>
                           <Header />

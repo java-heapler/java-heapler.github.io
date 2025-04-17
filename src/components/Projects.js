@@ -114,13 +114,13 @@ function Projects() {
   });
 
   return (
-    <section id="projects" className="section projects">
+    <section id="projects" className="section projects" role="region" aria-labelledby="projects-heading">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2>Projects</h2>
+        <h2 id="projects-heading">Projects</h2>
         
         <div className="projects-controls">
           <div className="search-box">
