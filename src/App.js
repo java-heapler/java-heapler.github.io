@@ -9,6 +9,8 @@ import './styles/App.css';
 import './styles/theme.css';
 import './styles/animations.css';
 import { initGA, logTiming } from './utils/analytics';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ErrorBoundary from './components/ErrorBoundary';
 
 // Critical components loaded immediately (not lazy)
@@ -24,6 +26,9 @@ const CookieConsent = lazy(() => import('./components/CookieConsent'));
 const SecondaryContent = lazy(() => 
   import(/* webpackPrefetch: true */ './components/SecondaryContent')
 );
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 // Fallback loading component with skeleton UI
 const LoadingFallback = () => (
@@ -41,11 +46,6 @@ function App() {
   useEffect(() => {
     // Initialize analytics when the app loads
     initGA();
-    
-    // Dynamic import GSAP only when needed
-    import('./utils/animation-setup').then(module => {
-      // GSAP and ScrollTrigger are now registered via the imported module
-    });
     
     // Add performance tracking
     if ('performance' in window && 'timing' in window.performance) {
