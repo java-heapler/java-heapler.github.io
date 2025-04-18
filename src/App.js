@@ -23,9 +23,7 @@ const Footer = lazy(() => import('./components/Footer'));
 const CookieConsent = lazy(() => import('./components/CookieConsent'));
 
 // Prefetch secondary content (below the fold)
-const SecondaryContent = lazy(() => 
-  import(/* webpackPrefetch: true */ './components/SecondaryContent')
-);
+const SecondaryContent = lazy(() => import('./components/SecondaryContent'));
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -139,10 +137,8 @@ function App() {
                       {/* Critical above-the-fold content loads immediately */}
                       <Header />
                       
-                      {/* Secondary content loads after primary content */}
-                      <Suspense fallback={<LoadingFallback />}>
-                        <SecondaryContent />
-                      </Suspense>
+                      {/* Secondary content loads immediately without Suspense */}
+                      <SecondaryContent />
                     </ErrorBoundary>
                   </main>
                 } />
