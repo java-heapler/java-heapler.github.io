@@ -1,5 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { HelmetProvider } from 'react-helmet-async';
 import Navigation from './components/Navigation';
@@ -42,6 +42,67 @@ const LoadingFallback = () => (
   </div>
 );
 
+// Route-specific SEO component
+const PageSEO = () => {
+  const location = useLocation();
+  const { pathname, hash } = location;
+  
+  // Set default SEO props
+  let seoProps = {
+    schemaType: 'WebPage'
+  };
+  
+  // Home page
+  if (pathname === '/' && !hash) {
+    seoProps = {
+      schemaType: 'Person',
+      title: 'Joseph Heupler | Software Engineer Portfolio',
+      description: 'Full-stack developer and UC Berkeley graduate specializing in scalable applications, cloud architecture, and modern web development.',
+      image: '/profile-optimized.jpg'
+    };
+  }
+  
+  // Projects section
+  else if (hash === '#projects') {
+    seoProps = {
+      title: 'Projects | Joseph Heupler',
+      description: 'View my latest software projects, including full-stack applications, cloud solutions, and data-driven implementations.',
+      pathname: '/',
+      image: '/profile-optimized.jpg'
+    };
+  }
+  
+  // About section
+  else if (hash === '#about') {
+    seoProps = {
+      title: 'About | Joseph Heupler',
+      description: 'UC Berkeley graduate with expertise in software engineering, cloud technologies, and modern development frameworks.',
+      pathname: '/',
+      image: '/profile-optimized.jpg'
+    };
+  }
+  
+  // Contact section
+  else if (hash === '#contact') {
+    seoProps = {
+      title: 'Contact | Joseph Heupler',
+      description: 'Get in touch with me for collaboration, job opportunities, or questions about my portfolio.',
+      pathname: '/'
+    };
+  }
+  
+  // Privacy page
+  else if (pathname === '/privacy') {
+    seoProps = {
+      title: 'Privacy Policy | Joseph Heupler',
+      description: 'Privacy policy and data handling information for Joseph Heupler\'s portfolio website.',
+      pathname: '/privacy'
+    };
+  }
+  
+  return <SEO {...seoProps} />;
+};
+
 function App() {
   useEffect(() => {
     // Initialize analytics when the app loads
@@ -68,7 +129,7 @@ function App() {
         <Router>
           <ErrorBoundary>
             <div className="app">
-              <SEO />
+              <PageSEO />
               <Navigation />
               
               <Routes>
