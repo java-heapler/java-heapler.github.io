@@ -8,7 +8,7 @@ import SEO from './components/SEO';
 import './styles/App.css';
 import './styles/theme.css';
 import './styles/animations.css';
-import { initGA } from './utils/analytics';
+import { initGA, logTiming } from './utils/analytics';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -51,7 +51,8 @@ function App() {
           const navTiming = performance.getEntriesByType('navigation')[0];
           if (navTiming) {
             const loadTime = navTiming.loadEventEnd - navTiming.startTime;
-            console.log(`Page loaded in ${loadTime}ms`);
+            // send real user timing to analytics
+            logTiming('Performance', 'page_load', loadTime, 'Page Load Time');
           }
         }, 0);
       });
