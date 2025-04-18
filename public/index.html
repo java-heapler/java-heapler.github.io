@@ -13,6 +13,24 @@
     <meta name="keywords" content="software engineer, full stack developer, machine learning, AR development, UC Berkeley, portfolio">
     <meta name="author" content="Joe Heupler">
 
+    <!-- Resource load error handler -->
+    <script>
+      // Handle CSS loading errors that might cause blank screen
+      window.addEventListener('error', function(e) {
+        // Only handle resource loading errors (not JS errors)
+        if (e.target && (e.target.tagName === 'LINK' || e.target.tagName === 'SCRIPT')) {
+          console.error('Resource failed to load:', e.target.src || e.target.href);
+          
+          // If it's CSS and might be critical, ensure body is still visible
+          if (e.target.tagName === 'LINK' && e.target.rel === 'stylesheet') {
+            document.body.style.display = 'block';
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = '1';
+          }
+        }
+      }, true);
+    </script>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://java-heapler.github.io/portfolio/">

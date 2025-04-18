@@ -18,7 +18,33 @@ function Header() {
   useEffect(() => {
     setIsVisible(true);
     if (headerRef.current) {
-      gsap.fromTo(headerRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 1.2 });
+      try {
+        // Wrap animation in try/catch to prevent errors from breaking rendering
+        gsap.fromTo(
+          headerRef.current, 
+          { opacity: 0, y: -20 }, 
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 1.2,
+            onError: () => {
+              console.error('GSAP animation error caught and handled');
+              // Force header to be visible even if animation fails
+              if (headerRef.current) {
+                headerRef.current.style.opacity = 1;
+                headerRef.current.style.transform = 'translateY(0)';
+              }
+            }
+          }
+        );
+      } catch (error) {
+        console.error('Error in GSAP animation:', error);
+        // Ensure content is visible even if animation completely fails
+        if (headerRef.current) {
+          headerRef.current.style.opacity = 1;
+          headerRef.current.style.transform = 'translateY(0)';
+        }
+      }
     }
   }, []);
 
@@ -113,13 +139,10 @@ function Header() {
                   alt="Joseph Heupler" 
                   className="profile-image"
                   loading="eager"
-                  width="300"
-                  height="300"
+                  width={300}
+                  height={300}
                   onLoad={() => setImageLoaded(true)}
-                  onError={(e) => {
-                    console.error('Image failed to load:', e);
-                    setImageLoaded(true);
-                  }}
+                  onError={e => { console.error('Image failed to load:', e); setImageLoaded(true); }}
                 />
               </picture>
             </motion.div>
