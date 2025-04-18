@@ -9,23 +9,21 @@ import './styles/App.css';
 import './styles/theme.css';
 import './styles/animations.css';
 import { initGA, logTiming } from './utils/analytics';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ErrorBoundary from './components/ErrorBoundary';
 
-// Performance optimization with code splitting
-const Header = lazy(() => import('./components/Header'));
-const About = lazy(() => import('./components/About'));
-const Projects = lazy(() => import('./components/Projects'));
-const Contact = lazy(() => import('./components/Contact'));
-const Footer = lazy(() => import('./components/Footer'));
-const ThemeToggle = lazy(() => import('./components/ThemeToggle'));
-const BackToTop = lazy(() => import('./components/BackToTop'));
-const CookieConsent = lazy(() => import('./components/CookieConsent'));
-const PerformanceOptimizations = lazy(() => import('./components/PerformanceOptimizations'));
+// Critical components loaded immediately (not lazy)
+import Header from './components/Header';
+import ThemeToggle from './components/ThemeToggle';
+import BackToTop from './components/BackToTop';
 
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
+// Lazy-loaded components with prefetch hints
+const Footer = lazy(() => import('./components/Footer'));
+const CookieConsent = lazy(() => import('./components/CookieConsent'));
+
+// Prefetch secondary content (below the fold)
+const SecondaryContent = lazy(() => 
+  import(/* webpackPrefetch: true */ './components/SecondaryContent')
+);
 
 // Fallback loading component with skeleton UI
 const LoadingFallback = () => (
@@ -43,6 +41,11 @@ function App() {
   useEffect(() => {
     // Initialize analytics when the app loads
     initGA();
+    
+    // Dynamic import GSAP only when needed
+    import('./utils/animation-setup').then(module => {
+      // GSAP and ScrollTrigger are now registered via the imported module
+    });
     
     // Add performance tracking
     if ('performance' in window && 'timing' in window.performance) {
@@ -67,65 +70,39 @@ function App() {
             <div className="app">
               <SEO />
               <Navigation />
-              <Suspense fallback={<LoadingFallback />}>
-                <Routes>
-                  <Route path="/" element={
-                    <main id="mainContent" role="main" className="container">
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <Header />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <About />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <Projects />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <PerformanceOptimizations />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <Contact />
-                        </Suspense>
-                      </ErrorBoundary>
-                    </main>
-                  } />
-                  <Route path="/privacy" element={
+              
+              <Routes>
+                <Route path="/" element={
+                  <main id="mainContent" role="main" className="container">
                     <ErrorBoundary>
-                      <Privacy />
+                      {/* Critical above-the-fold content loads immediately */}
+                      <Header />
+                      
+                      {/* Secondary content loads after primary content */}
+                      <Suspense fallback={<LoadingFallback />}>
+                        <SecondaryContent />
+                      </Suspense>
                     </ErrorBoundary>
-                  } />
-                </Routes>
-                
-                <ErrorBoundary>
-                  <Suspense fallback={<div></div>}>
-                    <Footer />
-                  </Suspense>
-                </ErrorBoundary>
-                
+                  </main>
+                } />
+                <Route path="/privacy" element={
+                  <ErrorBoundary>
+                    <Privacy />
+                  </ErrorBoundary>
+                } />
+              </Routes>
+              
+              <ErrorBoundary>
                 <Suspense fallback={<div></div>}>
-                  <ThemeToggle />
+                  <Footer />
                 </Suspense>
-                
-                <Suspense fallback={<div></div>}>
-                  <BackToTop />
-                </Suspense>
-                
-                <Suspense fallback={<div></div>}>
-                  <CookieConsent />
-                </Suspense>
+              </ErrorBoundary>
+              
+              <ThemeToggle />
+              <BackToTop />
+              
+              <Suspense fallback={<div></div>}>
+                <CookieConsent />
               </Suspense>
             </div>
           </ErrorBoundary>
