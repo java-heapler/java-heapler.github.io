@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkjoe_heupler_portfolio=self.webpackChunkjoe_heupler_portfolio||[]).push([[516],{516:(a,e,i)=>{i.r(e),i.d(e,{default:()=>n});i(43);var t=i(925),o=i(579);const n=()=>(0,o.jsx)(t.P.div,{className:"animated-gradient",initial:{opacity:0},animate:{opacity:1},transition:{duration:1}})}}]);
-//# sourceMappingURL=516.12c2eecf.chunk.js.map
