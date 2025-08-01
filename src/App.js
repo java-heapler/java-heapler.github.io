@@ -2,8 +2,6 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { HelmetProvider } from 'react-helmet-async';
-import Navigation from './components/Navigation';
-import Privacy from './components/Privacy';
 import SEO from './components/SEO';
 import './styles/App.css';
 import './styles/theme.css';
@@ -13,7 +11,12 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ErrorBoundary from './components/ErrorBoundary';
 
-// Performance optimization with code splitting
+// Enhanced components
+const EnhancedNavigation = lazy(() => import('./components/EnhancedNavigation'));
+const EnhancedHeader = lazy(() => import('./components/EnhancedHeader'));
+const EnhancedDemo = lazy(() => import('./components/EnhancedDemo'));
+
+// Original components (keeping for fallback)
 const Header = lazy(() => import('./components/Header'));
 const About = lazy(() => import('./components/About'));
 const Projects = lazy(() => import('./components/Projects'));
@@ -23,6 +26,7 @@ const ThemeToggle = lazy(() => import('./components/ThemeToggle'));
 const BackToTop = lazy(() => import('./components/BackToTop'));
 const CookieConsent = lazy(() => import('./components/CookieConsent'));
 const PerformanceOptimizations = lazy(() => import('./components/PerformanceOptimizations'));
+const Privacy = lazy(() => import('./components/Privacy'));
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -63,42 +67,67 @@ function App() {
       <ThemeProvider>
         <Router>
           <ErrorBoundary>
-            <div className="app">
+            <div className="app min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 transition-colors duration-500">
               <SEO />
-              <Navigation />
+              
+              {/* Enhanced Navigation */}
+              <ErrorBoundary>
+                <Suspense fallback={<div className="h-16 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md"></div>}>
+                  <EnhancedNavigation />
+                </Suspense>
+              </ErrorBoundary>
+
               <Suspense fallback={<LoadingFallback />}>
                 <Routes>
                   <Route path="/" element={
-                    <main className="container">
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <Header />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <About />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <Projects />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <PerformanceOptimizations />
-                        </Suspense>
-                      </ErrorBoundary>
-                      
-                      <ErrorBoundary>
-                        <Suspense fallback={<LoadingFallback />}>
-                          <Contact />
-                        </Suspense>
-                      </ErrorBoundary>
+                    <main className="relative">
+                      {/* Animated Background Elements */}
+                      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200/30 dark:bg-blue-800/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob"></div>
+                        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200/30 dark:bg-purple-800/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                        <div className="absolute top-40 left-40 w-80 h-80 bg-indigo-200/30 dark:bg-indigo-800/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                      </div>
+
+                      <div className="relative z-10">
+                        {/* Enhanced Header */}
+                        <ErrorBoundary>
+                          <Suspense fallback={<LoadingFallback />}>
+                            <EnhancedHeader />
+                          </Suspense>
+                        </ErrorBoundary>
+                        
+                        {/* Enhanced Demo Section */}
+                        <ErrorBoundary>
+                          <Suspense fallback={<LoadingFallback />}>
+                            <EnhancedDemo />
+                          </Suspense>
+                        </ErrorBoundary>
+                        
+                        {/* Original Sections (keeping for now) */}
+                        <ErrorBoundary>
+                          <Suspense fallback={<LoadingFallback />}>
+                            <About />
+                          </Suspense>
+                        </ErrorBoundary>
+                        
+                        <ErrorBoundary>
+                          <Suspense fallback={<LoadingFallback />}>
+                            <Projects />
+                          </Suspense>
+                        </ErrorBoundary>
+                        
+                        <ErrorBoundary>
+                          <Suspense fallback={<LoadingFallback />}>
+                            <PerformanceOptimizations />
+                          </Suspense>
+                        </ErrorBoundary>
+                        
+                        <ErrorBoundary>
+                          <Suspense fallback={<LoadingFallback />}>
+                            <Contact />
+                          </Suspense>
+                        </ErrorBoundary>
+                      </div>
                     </main>
                   } />
                   <Route path="/privacy" element={
@@ -113,10 +142,6 @@ function App() {
                     <Footer />
                   </Suspense>
                 </ErrorBoundary>
-                
-                <Suspense fallback={<div></div>}>
-                  <ThemeToggle />
-                </Suspense>
                 
                 <Suspense fallback={<div></div>}>
                   <BackToTop />

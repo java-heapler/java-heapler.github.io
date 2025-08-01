@@ -36,33 +36,49 @@ function Header() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
       transition={{ delay: 1.0, duration: 0.5 }}
-      className="social-links"
+      className="social-links flex space-x-4 mt-6"
     >
-      <a href="https://github.com/java-heapler" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-        <FaGithub />
+      <a 
+        href="https://github.com/java-heapler" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        aria-label="GitHub"
+        className="text-text-secondary hover:text-secondary transition-colors duration-300"
+      >
+        <FaGithub className="text-2xl" />
       </a>
-      <a href="https://www.linkedin.com/in/joseph-heupler/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-        <FaLinkedin />
+      <a 
+        href="https://www.linkedin.com/in/joseph-heupler/" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        aria-label="LinkedIn"
+        className="text-text-secondary hover:text-secondary transition-colors duration-300"
+      >
+        <FaLinkedin className="text-2xl" />
       </a>
-      <a href="mailto:jheupler@berkeley.edu" aria-label="Email">
-        <FaEnvelope />
+      <a 
+        href="mailto:jheupler@berkeley.edu" 
+        aria-label="Email"
+        className="text-text-secondary hover:text-secondary transition-colors duration-300"
+      >
+        <FaEnvelope className="text-2xl" />
       </a>
     </motion.div>
   );
 
   return (
-    <header ref={headerRef} className="header">
-      <div className="header-content">
-        <div className="header-main">
-          <div className="header-text">
+    <header ref={headerRef} className="header min-h-screen flex items-center justify-center">
+      <div className="header-content max-w-6xl mx-auto px-4">
+        <div className="header-main flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="header-text flex-1 text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
               transition={{ duration: 0.3 }}
             >
-              <h1>
-                <span className="greeting">Hello, I'm</span>
-                <span className="name">Joseph Heupler</span>
+              <h1 className="mb-4">
+                <span className="greeting block text-secondary text-lg font-medium">Hello, I'm</span>
+                <span className="name block text-text-primary text-4xl lg:text-6xl font-bold">Joseph Heupler</span>
               </h1>
             </motion.div>
             
@@ -71,19 +87,19 @@ function Header() {
               animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
               transition={{ delay: 0.1, duration: 0.3 }}
             >
-              <h2 className="title">Software Engineer</h2>
+              <h2 className="title text-text-secondary text-2xl lg:text-3xl font-medium mb-6">Software Engineer</h2>
             </motion.div>
             
             {/* Prioritize description rendering */}
             {isDesktop ? (
-              <p className="description" data-priority="high">
+              <p className="description text-text-secondary text-lg leading-relaxed mb-8" data-priority="high">
                 Full-stack developer and UC Berkeley graduate specializing in scalable 
                 applications, cloud architecture, and data-driven solutions. 
                 Experienced in building robust backend systems and deploying 
                 production-ready applications with modern DevOps practices.
               </p>
             ) : (
-              <p className="description description-mobile" data-priority="high">
+              <p className="description description-mobile text-text-secondary text-base leading-relaxed mb-8" data-priority="high">
                 Full-stack developer and UC Berkeley graduate specializing in scalable 
                 applications and cloud solutions.
               </p>
@@ -93,17 +109,32 @@ function Header() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
               transition={{ delay: 0.3, duration: 0.3 }}
-              className="cta-buttons"
+              className="cta-buttons flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <a href="#projects" className="primary-btn">View Projects</a>
-              <a href="#contact" className="secondary-btn">Get in Touch</a>
+              <a 
+                href="#projects" 
+                className="primary-btn bg-secondary text-primary px-8 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300 inline-block text-center"
+              >
+                View Projects
+              </a>
+              <a 
+                href="#contact" 
+                className="secondary-btn border-2 border-secondary text-secondary px-8 py-3 rounded-md font-medium hover:bg-secondary hover:text-primary transition-all duration-300 inline-block text-center"
+              >
+                Get in Touch
+              </a>
             </motion.div>
 
             {isDesktop && renderSocialLinks()}
           </div>
 
-          <div className={`header-image ${!imageLoaded ? 'loading' : ''}`}>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: imageLoaded ? 1 : 0 }} transition={{ duration: 0.5 }}>
+          <div className={`header-image ${!imageLoaded ? 'loading' : ''} flex-shrink-0`}>
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: imageLoaded ? 1 : 0 }} 
+              transition={{ duration: 0.5 }}
+              className="relative"
+            >
               <picture>
                 <source srcSet={`${process.env.PUBLIC_URL}/profile-optimized.avif`} type="image/avif" />
                 <source srcSet={`${process.env.PUBLIC_URL}/profile-optimized.jpg`} type="image/jpeg" />
@@ -111,7 +142,7 @@ function Header() {
                   ref={imageRef}
                   src={`${process.env.PUBLIC_URL}/profile-fallback.jpg`} 
                   alt="Joseph Heupler" 
-                  className="profile-image"
+                  className="profile-image rounded-full shadow-2xl"
                   loading="eager"
                   width="300"
                   height="300"
@@ -128,7 +159,7 @@ function Header() {
       </div>
       
       {isDesktop && (
-        <div className="header-background">
+        <div className="header-background absolute inset-0 -z-10">
           <Suspense fallback={<div className="gradient-placeholder" />}>
             <AnimatedGradient />
           </Suspense>
