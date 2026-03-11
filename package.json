@@ -79,6 +79,8 @@
     "@eslint/config-array": "^0.19.1",
     "@eslint/object-schema": "^2.1.5",
     "@rollup/plugin-terser": "^0.4.4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "babel-preset-react-app": "^10.0.1",
     "eslint": "^8.57.1",
     "gh-pages": "^6.2.0"
